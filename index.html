@@ -10,6 +10,55 @@
 </head>
 <body>
     
+    <h1>Weather Dashboard</h1>
+
+    <container id="body-Container" class="container">
+
+        <div class="row">
+
+            <div id="left-column" class="col-12 col-sm-3">
+
+                <form id="citySearchForm" class="col-12">
+
+                    <h2>Search for a City:</h2>
+
+                    <input type="text" id="city" name="city" placeholder="Enter City Name">
+
+                    <button>Search</button>
+
+                </form>
+
+                <section id="cityHistorySection" class="col-12">
+
+                    <container class="container">
+
+                        <div class="row" id="cityHistoryDiv">
+
+                            <!-- divs will be dynamically updated here -->
+
+                        </div>
+
+                    </container>
+
+                </section>
+
+            </div>
+
+            <div id="right-column" class="col-12 col-sm-9">
+
+                <section id="current-weather">
+                    current Weather
+                </section>
+
+                <section id="5-day">
+                    5 day forecast
+                </section>
+
+            </div>
+
+        </div>
+
+    </container>
 
     <script src="./assets/script.js"></script>
 
