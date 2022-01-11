@@ -3,56 +3,22 @@ var cityDivEl = document.getElementById("cityHistoryDiv");
 
 var cityList = [];
 
-var accessOpenWeather = function (lat, lon) {
+var saveCity = function () {
+    localStorage.setItem("cities", JSON.stringify(cityList));
+}
 
-    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=e6f7edaba6b949091a1ea142d0fa74fe";
+var loadCities = function () {
 
-    fetch(apiUrl)
-        .then(function(response) {
-            if (response.ok) {
-                response.json().then(function(data) {
-                    console.log(data);
-                });
-            }
-            else {
-                alert("Error: GitHub User Not Found");
-            } 
-        })
-        .catch(function(error) {
-            //notice this '.catch()' getting chained onto the end of the '.then()' method
-            alert("Unable to connect to GitHub");
-        });
-};
+    //already proven cityList is indeed an array object
+    var loadedList = JSON.parse(localStorage.getItem("cities"));
 
-var getLongLat = function (event) {
+    for (var i =0; i<loadedList.length; i++) {
+        //recreate cityList array from localstorage
+        cityList.push(loadedList[i]);
 
-    event.preventDefault();
+        populateButtons(loadedList[i]);
 
-    var cityInputEl = document.querySelector("#city");
-    var city = cityInputEl.value.trim();
-    
-    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=e6f7edaba6b949091a1ea142d0fa74fe";
-
-    console.log(apiUrl);
-
-    fetch(apiUrl)
-        .then(function(response) {
-            if (response.ok) {
-                response.json().then(function(data) {
-                    console.log(data);
-                });
-            }
-            else {
-                alert("Error: GitHub User Not Found");
-            } 
-        })
-        .catch(function(error) {
-            //notice this '.catch()' getting chained onto the end of the '.then()' method
-            alert("Unable to connect to GitHub");
-        });
-
-    createNewCityButton(city);
-    
+    }
 }
 
 var populateButtons = function(citay) {
@@ -87,30 +53,69 @@ var createNewCityButton = function(city) {
     }
 };
 
-var saveCity = function () {
-    localStorage.setItem("cities", JSON.stringify(cityList));
+var getLongLat = function (event) {
+
+    event.preventDefault();
+
+    var cityInputEl = document.querySelector("#city");
+    var city = cityInputEl.value.trim();
+    
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=e6f7edaba6b949091a1ea142d0fa74fe";
+
+    //console.log(apiUrl);
+
+    fetch(apiUrl)
+        .then(function(response) {
+            if (response.ok) {
+                response.json().then(function(data) {
+                    var lat = data.coord.lat;
+                    var lon = data.coord.lon;
+                    accessOpenWeather(lat, lon, city);
+                });
+            }
+            else {
+                alert("Error: Response not okay");
+            } 
+        })
+        .catch(function(error) {
+            //notice this '.catch()' getting chained onto the end of the '.then()' method
+            alert(error);
+        });
+
+    createNewCityButton(city);
 }
 
-var loadCities = function () {
+var accessOpenWeather = function (lat, lon, city) {
 
-    //already proven cityList is indeed an array object
-    var loadedList = JSON.parse(localStorage.getItem("cities"));
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=e6f7edaba6b949091a1ea142d0fa74fe";
 
-    for (var i =0; i<loadedList.length; i++) {
-        //recreate cityList array from localstorage
-        cityList.push(loadedList[i]);
+    fetch(apiUrl)
+        .then(function(response) {
+            if (response.ok) {
+                response.json().then(function(data) {
+                    currentWeatherLoad(data,city);
+                });
+            }
+            else {
+                alert("Error: GitHub User Not Found");
+            } 
+        })
+        .catch(function(error) {
+            //notice this '.catch()' getting chained onto the end of the '.then()' method
+            alert("Unable to connect to GitHub");
+        });
+};
 
-        populateButtons(loadedList[i]);
+var currentWeatherLoad = function(data,city) {
+    //dynamically update the html of #current-weather
+    var sectionElH2 = document.querySelector("#current-weather").firstElementChild;
+    sectionElH2.innerHTML = city + " " + moment().format("(l)"); //+ cloudIcon;
 
-    }
+    console.log(data.current.uvi);
+
+    var dataDiv = document.getElementById("weather-data");
+    dataDiv.innerHTML = "Temp: " + data.current.temp + "<br/> <br/> Wind: " + data.current.wind_speed + "<br/> <br/> Humidity: " + data.current.humidity + "%" + "<br/> <br/> UV Index: " + "<div>" + data.current.uvi + "</div>";
 }
-
-var currentWeatherLoad = function(city) {
-    //use ajax to dynamically update the html
-    console.log("will load weather for " + city);
-}
-
-//accessOpenWeather(46.60, -122.33);
 
 searchFormEl.addEventListener('submit', getLongLat);
 
