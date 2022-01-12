@@ -35,18 +35,14 @@ var populateButtons = function(citay) {
 
 var createNewCityButton = function(city) {
     
-
     if (cityList.includes(city)) {
-        currentWeatherLoad(city);
+        return;
     }
     else {
 
         //add city input to array
         cityList.push(city);
         saveCity();
-
-        //display city info in current weather div
-        currentWeatherLoad(city);
 
         //add button with new city
         populateButtons(city);
@@ -71,18 +67,17 @@ var getLongLat = function (event) {
                     var lat = data.coord.lat;
                     var lon = data.coord.lon;
                     accessOpenWeather(lat, lon, city);
+                    createNewCityButton(city);
                 });
             }
             else {
-                alert("Error: Response not okay");
+                alert("Error: Api response not okay. Make sure it's a valid city with data from Open Weather");
             } 
         })
         .catch(function(error) {
             //notice this '.catch()' getting chained onto the end of the '.then()' method
             alert(error);
         });
-
-    createNewCityButton(city);
 }
 
 var accessOpenWeather = function (lat, lon, city) {
@@ -97,12 +92,12 @@ var accessOpenWeather = function (lat, lon, city) {
                 });
             }
             else {
-                alert("Error: GitHub User Not Found");
+                alert("Error: unable to connect to Open Weather");
             } 
         })
         .catch(function(error) {
             //notice this '.catch()' getting chained onto the end of the '.then()' method
-            alert("Unable to connect to GitHub");
+            alert("Unable to connect to Open Weather");
         });
 };
 
@@ -110,8 +105,6 @@ var currentWeatherLoad = function(data,city) {
     //dynamically update the html of #current-weather
     var sectionElH2 = document.querySelector("#current-weather").firstElementChild;
     sectionElH2.innerHTML = city + " " + moment().format("(l)"); //+ cloudIcon;
-
-    console.log(data.current.uvi);
 
     var dataDiv = document.getElementById("weather-data");
     dataDiv.innerHTML = "Temp: " + data.current.temp + "<br/> <br/> Wind: " + data.current.wind_speed + "<br/> <br/> Humidity: " + data.current.humidity + "%" + "<br/> <br/> UV Index: " + "<div>" + data.current.uvi + "</div>";
