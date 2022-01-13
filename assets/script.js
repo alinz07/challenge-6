@@ -104,10 +104,66 @@ var accessOpenWeather = function (lat, lon, city) {
 var currentWeatherLoad = function(data,city) {
     //dynamically update the html of #current-weather
     var sectionElH2 = document.querySelector("#current-weather").firstElementChild;
-    sectionElH2.innerHTML = city + " " + moment().format("(l)"); //+ cloudIcon;
+    var iconUrl = "http://openweathermap.org/img/wn/" + data.current.weather[0].icon + "@2x.png";
+    sectionElH2.innerHTML = city + " " + moment().format("(l)") + "<img src='" + iconUrl + "'/>";
 
     var dataDiv = document.getElementById("weather-data");
     dataDiv.innerHTML = "Temp: " + data.current.temp + "<br/> <br/> Wind: " + data.current.wind_speed + "<br/> <br/> Humidity: " + data.current.humidity + "%" + "<br/> <br/> UV Index: " + "<div>" + data.current.uvi + "</div>";
+
+    var fiveDaySection = document.getElementById("5-day");
+    fiveDaySection.innerText = "5-Day Forecast";
+    var forecast = document.createElement("div");
+    forecast.className = "row justify-content-between";
+    fiveDaySection.appendChild(forecast);
+
+    for (var i=0; i<5; i++) {
+
+        //create a card to put tomorrow's data in
+        var dayCard = document.createElement("div");
+
+        //add a class to that div to make it a card and make mobilly responsive so 
+        //that it takes up 20% of #5-day section until md screen when it goes to 100&
+        dayCard.className = "card col-12 col-md-2";
+
+        //add a list to the div
+        var forecastUl = document.createElement("ul");
+        forecastUl.className="list-group list-group-flush"
+        dayCard.appendChild(forecastUl);
+
+        //add day li element to the ul
+        var forecastDayLi = document.createElement("li");
+        forecastDayLi.className = "list-group-item"
+        forecastDayLi.innerHTML = moment().add((1+i), 'd').format("l");
+        forecastUl.appendChild(forecastDayLi);
+
+        //add the weather icon
+        var forecastIconLi = document.createElement("li");
+        forecastIconLi.className = "list-group-item"
+        forecastIconLi.innerHTML = "<img src='http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + "@2x.png' />";
+        forecastUl.appendChild(forecastIconLi);
+
+        //add the temp
+        var forecastTempLi = document.createElement("li");
+        forecastTempLi.className = "list-group-item"
+        forecastTempLi.innerHTML = "Temp: " + data.daily[i].temp.max;
+        forecastUl.appendChild(forecastTempLi);
+
+        //add the windspeed
+        var forecastWindLi = document.createElement("li");
+        forecastWindLi.className = "list-group-item"
+        forecastWindLi.innerHTML = "Wind: " + data.daily[i].wind_speed;
+        forecastUl.appendChild(forecastWindLi);
+
+        //add the humidity
+        var forecastHumLi = document.createElement("li");
+        forecastHumLi.className = "list-group-item"
+        forecastHumLi.innerHTML = "Humidty: " + data.daily[i].humidity;
+        forecastUl.appendChild(forecastHumLi);
+
+        //append card to forecast div
+        forecast.appendChild(dayCard);
+    }
+
 }
 
 searchFormEl.addEventListener('submit', getLongLat);
