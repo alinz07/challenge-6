@@ -36,20 +36,25 @@ THEN I am again presented with current and future conditions for that city
 <br/>
 
 ## **How and Why**
+Pseudo coding really helped me with this one, but I still ended up breaking the DRY principle because I'm short on time and needed to copy the getLongLat function into the HistGetLongLat, instead of passing one into the other. It's more lines of code that will be cleaned up as time allows, but it saved me a lot of time pseudo coding and copying bits of work I had already done.
 
+Working on one section at a time, using console.log statements and copy Request URLs from the Network tab of the console helped me make significant leaps with this one. The only section that is hard coded is the search form, everything else is dynamically created, emptied, and/or saved to localStorage. The dynamism makes for fast and easy to understand code because it details the elements you're creating and why in both the pseudo code and actual code itself.
 
 <br/>
 <br/>
 
 ## **Things I learned**
-* .
+* At the recommendation of my tutor, I put together an MVP before messing with the CSS too much. It really worked. I learned the value of doing the minimum amount of work necessary while juggling multiple projects. Right now we have a group project
+I'm working on where we are short-handed, as well as this assignment, and it feels amazing to have an MVP, even if it isn't pretty.
 
-* .
+* I learned a lot about css api's, specifically bootstrap and the rules for it's classes and the html containers necessary to incorporate it.
+
+* I spent a lot of time getting the icon to work, which forced me to really analyze the JSON data. I didn't realize that it was a combination of objects and arrays. I needed to index arrays and .method objects.
 <br/>
 <br/>
 
 ## **What makes this project stand out?**
-.
+The extent of the dynamic HTML makes this project stand out. The mock up created an easy user interface, but of that mockup, only the search form is hard-coded. I'm proud of the flexibility and dynamism.
 <br/>
 <br/>
 # Screenshot of web application
@@ -58,6 +63,6 @@ THEN I am again presented with current and future conditions for that city
 <br/>
 
 ### **Credits**
-* none
+* Open Weather Api: https://openweathermap.org/ 
 
 
