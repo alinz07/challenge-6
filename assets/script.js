@@ -26,7 +26,7 @@ var populateButtons = function(citay) {
     var newButton = document.createElement("button");
 
     //add button text and styles
-    newButton.className = "col-12"
+    newButton.className = "col-12 mybtn"
     newButton.innerText=citay;
 
     //append button to make visible and use
@@ -78,6 +78,35 @@ var getLongLat = function (event) {
             //notice this '.catch()' getting chained onto the end of the '.then()' method
             alert(error);
         });
+}
+
+var HistGetLongLat = function(event) {
+
+    var city = event.target.innerText;
+    
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=e6f7edaba6b949091a1ea142d0fa74fe";
+
+    //console.log(apiUrl);
+
+    fetch(apiUrl)
+        .then(function(response) {
+            if (response.ok) {
+                response.json().then(function(data) {
+                    var lat = data.coord.lat;
+                    var lon = data.coord.lon;
+                    accessOpenWeather(lat, lon, city);
+                    createNewCityButton(city);
+                });
+            }
+            else {
+                alert("Error: Api response not okay. Make sure it's a valid city with data from Open Weather");
+            } 
+        })
+        .catch(function(error) {
+            //notice this '.catch()' getting chained onto the end of the '.then()' method
+            alert(error);
+        });
+    
 }
 
 var accessOpenWeather = function (lat, lon, city) {
@@ -167,6 +196,8 @@ var currentWeatherLoad = function(data,city) {
 }
 
 searchFormEl.addEventListener('submit', getLongLat);
+
+cityDivEl.addEventListener('click', HistGetLongLat)
 
 loadCities();
 
