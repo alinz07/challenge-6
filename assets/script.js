@@ -26,7 +26,7 @@ var populateButtons = function(citay) {
     var newButton = document.createElement("button");
 
     //add button text and styles
-    newButton.className = "col-12 mybtn"
+    newButton.className = "col-12 mybtn rounded mt-2";
     newButton.innerText=citay;
 
     //append button to make visible and use
@@ -138,7 +138,6 @@ var currentWeatherLoad = function(data,city) {
 
     var dataDiv = document.getElementById("weather-data");
     dataDiv.innerHTML = "Temp: " + data.current.temp + "<br/> <br/> Wind: " + data.current.wind_speed + "<br/> <br/> Humidity: " + data.current.humidity + "%" + "<br/> <br/> UV Index: " + "<div>" + data.current.uvi + "</div>";
-
     var fiveDaySection = document.getElementById("5-day");
     fiveDaySection.innerText = "5-Day Forecast";
     var forecast = document.createElement("div");
@@ -200,4 +199,3 @@ searchFormEl.addEventListener('submit', getLongLat);
 cityDivEl.addEventListener('click', HistGetLongLat)
 
 loadCities();
-
