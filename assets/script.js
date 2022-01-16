@@ -137,7 +137,7 @@ var currentWeatherLoad = function(data,city) {
     sectionElH2.innerHTML = city + " " + moment().format("(l)") + "<img src='" + iconUrl + "'/>";
 
     var dataDiv = document.getElementById("weather-data");
-    dataDiv.innerHTML = "Temp: " + data.current.temp + "<br/> <br/> Wind: " + data.current.wind_speed + "<br/> <br/> Humidity: " + data.current.humidity + "%" + "<br/> <br/> UV Index: " + "<div>" + data.current.uvi + "</div>";
+    dataDiv.innerHTML = "Temp: " + data.current.temp + "<br/> <br/> Wind: " + data.current.wind_speed + "<br/> <br/> Humidity: " + data.current.humidity + "%" + "<br/> <br/> UV Index: " + "<div id='uv-div' class='d-inline bg-success text-light px-1'>" + data.current.uvi + "</div>";
     var fiveDaySection = document.getElementById("5-day");
     fiveDaySection.innerText = "5-Day Forecast";
     var forecast = document.createElement("div");
@@ -160,32 +160,32 @@ var currentWeatherLoad = function(data,city) {
 
         //add day li element to the ul
         var forecastDayLi = document.createElement("li");
-        forecastDayLi.className = "list-group-item"
+        forecastDayLi.className = "list-group-item fw-bold"
         forecastDayLi.innerHTML = moment().add((1+i), 'd').format("l");
         forecastUl.appendChild(forecastDayLi);
 
         //add the weather icon
         var forecastIconLi = document.createElement("li");
         forecastIconLi.className = "list-group-item"
-        forecastIconLi.innerHTML = "<img src='http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + "@2x.png' />";
+        forecastIconLi.innerHTML = "<img class='weather-icon' src='http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + "@2x.png' />";
         forecastUl.appendChild(forecastIconLi);
 
         //add the temp
         var forecastTempLi = document.createElement("li");
         forecastTempLi.className = "list-group-item"
-        forecastTempLi.innerHTML = "Temp: " + data.daily[i].temp.max;
+        forecastTempLi.innerHTML = "Temp: " + (parseInt((((data.daily[i].temp.max)-273.15)*(9/5))+32)) + "\xb0";
         forecastUl.appendChild(forecastTempLi);
 
         //add the windspeed
         var forecastWindLi = document.createElement("li");
         forecastWindLi.className = "list-group-item"
-        forecastWindLi.innerHTML = "Wind: " + data.daily[i].wind_speed;
+        forecastWindLi.innerHTML = "Wind: " + data.daily[i].wind_speed + "MPH";
         forecastUl.appendChild(forecastWindLi);
 
         //add the humidity
         var forecastHumLi = document.createElement("li");
         forecastHumLi.className = "list-group-item"
-        forecastHumLi.innerHTML = "Humidty: " + data.daily[i].humidity;
+        forecastHumLi.innerHTML = "Humidty: " + data.daily[i].humidity + " %";
         forecastUl.appendChild(forecastHumLi);
 
         //append card to forecast div

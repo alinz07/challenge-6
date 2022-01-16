@@ -1,3 +1,7 @@
+.container {
+    width: 100%;
+}
+
 #city {
     width: 100%;
 }
@@ -13,5 +17,23 @@
 #citySearchForm button {
     width: 100%;
     margin: 10px 0 17px 0;
+}
 
+#current-weather {
+    margin-top: -20px;
+}
+
+#current-weather > * {
+    padding-left: 10px;
+}
+
+.list-group-item {
+    padding: 5px;
+    overflow: hidden;
+    background-color: rgb(22, 22, 61);
+    color: white;
+}
+
+.weather-icon{
+    width: 35%;
 }
