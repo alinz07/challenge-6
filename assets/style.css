@@ -1,3 +1,7 @@
+#header {
+    background-image: linear-gradient(to right, dodgerblue, navy);
+}
+
 .container {
     width: 100%;
 }
