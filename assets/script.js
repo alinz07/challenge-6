@@ -137,7 +137,19 @@ var currentWeatherLoad = function(data,city) {
     sectionElH2.innerHTML = city + " " + moment().format("(l)") + "<img src='" + iconUrl + "'/>";
 
     var dataDiv = document.getElementById("weather-data");
-    dataDiv.innerHTML = "Temp: " + data.current.temp + "<br/> <br/> Wind: " + data.current.wind_speed + "<br/> <br/> Humidity: " + data.current.humidity + "%" + "<br/> <br/> UV Index: " + "<div id='uv-div' class='d-inline bg-success text-light px-1'>" + data.current.uvi + "</div>";
+    dataDiv.innerHTML = "Temp: " + data.current.temp + "<br/> <br/> Wind: " + data.current.wind_speed + "<br/> <br/> Humidity: " + data.current.humidity + "%" + "<br/> <br/> UV Index: " + "<div id='uv-div' class='d-inline text-light px-1'>" + data.current.uvi + "</div>";
+    
+
+    if (data.current.uvi <=2) {
+        document.getElementById("uv-div").className = "d-inline text-light px-1 bg-success";
+    }
+    else if (data.current.uvi >2 && data.current.uvi <=5) {
+        document.getElementById("uv-div").className = "d-inline text-light px-1 bg-warning";
+    }
+    else if (data.current.uvi >5) {
+        document.getElementById("uv-div").className = "d-inline text-light px-1 bg-danger";
+    }
+    
     var fiveDaySection = document.getElementById("5-day");
     fiveDaySection.innerText = "5-Day Forecast";
     var forecast = document.createElement("div");
