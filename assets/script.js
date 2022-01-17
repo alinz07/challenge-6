@@ -137,7 +137,7 @@ var currentWeatherLoad = function(data,city) {
     sectionElH2.innerHTML = city + " " + moment().format("(l)") + "<img src='" + iconUrl + "'/>";
 
     var dataDiv = document.getElementById("weather-data");
-    dataDiv.innerHTML = "Temp: " + data.current.temp + "<br/> <br/> Wind: " + data.current.wind_speed + "<br/> <br/> Humidity: " + data.current.humidity + "%" + "<br/> <br/> UV Index: " + "<div id='uv-div' class='d-inline text-light px-1'>" + data.current.uvi + "</div>";
+    dataDiv.innerHTML = "Temp: " + parseInt((((data.current.temp)-273.15)*(9/5))+32) + "\xb0" + "<br/> <br/> Wind: " + data.current.wind_speed + "<br/> <br/> Humidity: " + data.current.humidity + "%" + "<br/> <br/> UV Index: " + "<div id='uv-div' class='d-inline text-light px-1'>" + data.current.uvi + "</div>";
     
 
     if (data.current.uvi <=2) {
