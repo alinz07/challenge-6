@@ -23,6 +23,10 @@
     margin: 10px 0 17px 0;
 }
 
+#left-column {
+    margin-bottom: 40px;
+}
+
 #current-weather {
     margin-top: -20px;
 }

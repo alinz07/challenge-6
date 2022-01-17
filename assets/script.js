@@ -163,7 +163,7 @@ var currentWeatherLoad = function(data,city) {
 
         //add a class to that div to make it a card and make mobilly responsive so 
         //that it takes up 20% of #5-day section until md screen when it goes to 100&
-        dayCard.className = "card col-12 col-md-2";
+        dayCard.className = "card col-12 col-lg-2";
 
         //add a list to the div
         var forecastUl = document.createElement("ul");
@@ -172,7 +172,7 @@ var currentWeatherLoad = function(data,city) {
 
         //add day li element to the ul
         var forecastDayLi = document.createElement("li");
-        forecastDayLi.className = "list-group-item fw-bold"
+        forecastDayLi.className = "list-group-item fw-bold future-weather-date"
         forecastDayLi.innerHTML = moment().add((1+i), 'd').format("l");
         forecastUl.appendChild(forecastDayLi);
 
